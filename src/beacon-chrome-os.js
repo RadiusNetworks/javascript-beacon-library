@@ -3,6 +3,7 @@
 let BeaconAdvertisement = require('./beacon-advertisement.js').BeaconAdvertisement;
 
 class BeaconChromeOS {
+
   static registerAdvertisement(options) {
     return new Promise((resolve, reject) => {
       let chromeAdv = BeaconChromeOS._constructAdvertisement(options);

@@ -2,7 +2,7 @@
 
 A JavaScript library for broadcasting BLE Beacon advertisements, wrapping existing
 advertising APIs to make beacon transmission easier for developers.  The library
-is flexible, supporting custom beacon types that can be registered with a `parserLayout`
+is flexible, supporting custom beacon types that can be registered with a `beaconLayout`
  similar to the [Android Beacon Library](https://altbeacon.github.io/android-beacon-library/)
  and [ScanBeacon Ruby Gem](https://github.com/RadiusNetworks/scanbeacon-gem).  The
  following beacon types are also supported by default:
@@ -89,12 +89,12 @@ To register a custom beacon type use the `registerBeaconType()` method:
 ```
 beacon.registerBeaconType({
   type: 'cool_beacon',
-  parserLayout: 'm:2-3=0000,i:4-19,i:20-21,i:22-23,p:24-24',
+  beaconLayout: 'm:2-3=0000,i:4-19,i:20-21,i:22-23,p:24-24',
   manufacturerId: 0x1234
 })
 ```
 
-For more information on the `parserLayout` check out
+For more information on the `beaconLayout` check out
 [this page](http://altbeacon.github.io/android-beacon-library/javadoc/org/altbeacon/beacon/BeaconParser.html#setBeaconLayout(java.lang.String))
 from the Android Beacon Library docs.
 

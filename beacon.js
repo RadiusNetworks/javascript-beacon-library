@@ -72,7 +72,7 @@
         A string containing the layout of the custom beacon advertisement layout.
         Follows the same convention as the Android Beacon Library
       */
-      this.parserLayout = undefined;
+      this.beaconLayout = undefined;
 
       if (typeof options.beaconType.manufacturerId !== 'undefined' && typeof options.beaconType.serviceUuid !== 'undefined') {
         throw new Error('Manufacturer ID and Service UUID can\'t both be specified');
@@ -217,7 +217,7 @@
      @default
    */
 
-  let BeaconParser = require('./beacon-parser.js');
+  let BeaconParser = require('./beacon-layout.js');
 
   // If we are in a browser TextEncoder should be available already.
   if (typeof global.TextEncoder === 'undefined') {
@@ -269,7 +269,7 @@
       if (advertisedTxPower < -100 || advertisedTxPower > 20) {
         throw new Error('Invalid Tx Power value: ' + advertisedTxPower + '.');
       }
-      let layout = BeaconParser.parseLayout(beacon_type.parserLayout);
+      let layout = BeaconParser.parseLayout(beacon_type.beaconLayout);
       let end_bytes = [].concat(layout.matchers, layout.ids, layout.power, layout.dataFields).map((e) => e.end);
       let length = Math.max.apply(Math, end_bytes) + 1;
       // Start with array of zeros
@@ -286,7 +286,7 @@
       layout_ids.forEach((layout_id, index) => {
         let id = ids[index];
         let bytes;
-        if (beacon_type.parserLayout === 's:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-21v') {
+        if (beacon_type.beaconLayout === 's:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-21v') {
           // Detect Eddystone URL and encode URL
           bytes = BeaconData.encodeURL(id);
         } else {
@@ -463,13 +463,13 @@
 })();
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./beacon-parser.js":4,"text-encoding":undefined}],4:[function(require,module,exports){
+},{"./beacon-layout.js":4,"text-encoding":undefined}],4:[function(require,module,exports){
 (() => {
   'use strict';
 
   /**
-   * @module beacon-parser
-   * @typicalname parser
+   * @module beacon-layout
+   * @typicalname beacon
    */
 
   /**
@@ -480,17 +480,17 @@
    */
 
   /**
-     This class provides helper functions that relate to deconstructing beacon parser.
-     @alias module:beacon-parser
+     This class provides helper functions that relate to deconstructing beacon beacon.
+     @alias module:beacon-layout
    */
   class BeaconParser {
     /**
        Constructs an ordered array of matchers, identifiers, advertised power, and data based
-       on the parser layout
+       on the beacon layout
      */
-    static parseLayout(parserLayout) {
+    static parseLayout(beaconLayout) {
       let matchers = [], ids = [], dataFields = [], power, layoutArray = [];
-      layoutArray = parserLayout.split(',');
+      layoutArray = beaconLayout.split(',');
       for (let i = 0; i < layoutArray.length; i++) {
         let field, field_params, field_type, range_start, range_end, expected;
         field = layoutArray[i];
@@ -576,8 +576,8 @@
     registerBeaconType(options) {
       let self = this;
       // Register a new custom beacon type
-      if (!('parserLayout' in options) && !('type' in options)) {
-        throw new TypeError('Required member type or parserLayout is undefined.');
+      if (!('beaconLayout' in options) && !('type' in options)) {
+        throw new TypeError('Required member type or beaconLayout is undefined.');
       }
       if (!('manufacturerId' in options) && !('serviceUuid' in options)) {
         throw new TypeError('Required member manufacturerId or serviceUuid is undefined.');
@@ -587,18 +587,18 @@
       }
 
       let type = options.type;
-      let parserLayout = options.parserLayout;
+      let beaconLayout = options.beaconLayout;
 
       if ('manufacturerId' in options) {
         let manufacturerId = options.manufacturerId;
         self.beaconTypes[type] = {
-          parserLayout: parserLayout,
+          beaconLayout: beaconLayout,
           manufacturerId: manufacturerId
         };
       } else if ('serviceUuid' in options) {
         let serviceUuid = options.serviceUuid;
         self.beaconTypes[type] = {
-          parserLayout: parserLayout,
+          beaconLayout: beaconLayout,
           serviceUuid: serviceUuid
         };
       }
@@ -609,17 +609,17 @@
       defaultBeaconTypes = [
         {
           type: 'altbeacon',
-          parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+          beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
           manufacturerId: 0x0118
         },
         {
           type: 'eddystone_uid',
-          parserLayout: 's:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19,d:20-21',
+          beaconLayout: 's:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19,d:20-21',
           serviceUuid: 0xFEAA
         },
         {
           type: 'eddystone_url',
-          parserLayout: 's:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-21v',
+          beaconLayout: 's:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-21v',
           serviceUuid: 0xFEAA
         }
       ];
@@ -667,7 +667,7 @@
       if (!('manufacturerId' in options.beaconType) && !('serviceUuid' in options.beaconType)) {
         throw new TypeError('Required member manufacturerId or serviceUuid is undefined.');
       }
-      if (!('parserLayout' in options.beaconType)) {
+      if (!('beaconLayout' in options.beaconType)) {
         throw new TypeError('Parser layout not defined in beacon type.');
       }
       if (!('ids' in options)) {

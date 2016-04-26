@@ -22,8 +22,8 @@ describe('Beacon', () => {
         expect(() => Beacon._checkAdvertisementOptions({type: 'ibeacon'}))
                               .to.throw(TypeError, /beacon types/);
       });
-      it('No type or parserLayout', () => {
-        expect(() => Beacon._checkAdvertisementOptions({})).to.throw(TypeError, /type|parserLayout/);
+      it('No type or beaconLayout', () => {
+        expect(() => Beacon._checkAdvertisementOptions({})).to.throw(TypeError, /type|beaconLayout/);
       });
     });
 
@@ -31,11 +31,11 @@ describe('Beacon', () => {
       [{
         name: 'No  type, no ids, no advertisedTxPower',
         options: {},
-        errorRegex: /type|parserLayout/
+        errorRegex: /type|beaconLayout/
       }, {
         name: 'Yes type, no ids, no advertisedTxPower',
         options: {type: 'altbeacon', beaconType: {
-          parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+          beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
           manufacturerId: 0x0118}
         },
         errorRegex: /ids|advertisedTxPower/
@@ -47,7 +47,7 @@ describe('Beacon', () => {
         name: 'Yes type, no ids, yes advertisedTxPower',
         options: {type: 'altbeacon',
           beaconType: {
-            parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+            beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
             manufacturerId: 0x0118
           },
           advertisedTxPower: 0},
@@ -60,7 +60,7 @@ describe('Beacon', () => {
         name: 'Yes type, yes ids, no advertisedTxPower',
         options: {type: 'altbeacon',
           beaconType: {
-            parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+            beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
             manufacturerId: 0x0118
           },
           ids: ''},
@@ -80,7 +80,7 @@ describe('Beacon', () => {
         expect(() => Beacon._checkAdvertisementOptions({
           type: 'altbeacon',
           beaconType: {
-            parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+            beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
             manufacturerId: 0x0118
           },
           ids: ['2F234454CF6D4A0FADF2F4911BA9FFA6', 1, 1],
@@ -132,21 +132,21 @@ describe('Beacon', () => {
   describe('registerBeaconType()', () => {
     let options = {
       type: 'cool_beacon',
-      parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+      beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
       manufacturerId: 0x0118,
     };
 
     it('Invalid options', () => {
       let beacon = new Beacon();
       expect(() => beacon.registerBeaconType({}))
-                             .to.throw(TypeError, /type|parserLayout/);
+                             .to.throw(TypeError, /type|beaconLayout/);
     });
 
     it('Successfully register beacon type', () => {
       let beacon = new Beacon();
       beacon.registerBeaconType(options);
       expect(beacon.beaconTypes.cool_beacon).to.eql({
-        parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+        beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
         manufacturerId: 280
       });
     });
@@ -169,15 +169,15 @@ describe('Beacon', () => {
       let beacon = new Beacon();
       expect(beacon.beaconTypes).to.eql({
         altbeacon: {
-          parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+          beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
           manufacturerId: 280
         },
         eddystone_uid: {
-          parserLayout: 's:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19,d:20-21',
+          beaconLayout: 's:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19,d:20-21',
           serviceUuid: 65194
         },
         eddystone_url: {
-          parserLayout: 's:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-21v',
+          beaconLayout: 's:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-21v',
           serviceUuid: 65194
         }
       });

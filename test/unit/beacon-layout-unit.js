@@ -8,15 +8,15 @@ import sinon from 'sinon';
 import chaiAsPromised from 'chai-as-promised';
 chai.use(chaiAsPromised);
 
-import BeaconParser from '../../lib/beacon-parser.js';
+import BeaconParser from '../../lib/beacon-layout.js';
 // jshint ignore:end
 
 describe('BeaconParser', () => {
 
   describe('parseLayout()', () => {
     it('Parses a valid layout', () => {
-      let parserLayout = 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25';
-      let parsedLayout = BeaconParser.parseLayout(parserLayout);
+      let beaconLayout = 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25';
+      let parsedLayout = BeaconParser.parseLayout(beaconLayout);
       expect(parsedLayout.matchers).to.eql([
         { start: 2, end: 3, length: 2, expected: 'beac' }
       ]);

@@ -2,7 +2,7 @@
 
 A JavaScript library for broadcasting BLE Beacon advertisements, wrapping existing
 advertising APIs to make beacon transmission easier for developers.  The library
-is flexible, supporting custom beacon types that can be registered with a `parserLayout`
+is flexible, supporting custom beacon types that can be registered with a `beaconLayout`
  similar to the [Android Beacon Library](https://altbeacon.github.io/android-beacon-library/)
  and [ScanBeacon Ruby Gem](https://github.com/RadiusNetworks/scanbeacon-gem).  The
  following beacon types are also supported by default:
@@ -89,12 +89,12 @@ To register a custom beacon type use the `registerBeaconType()` method:
 ```
 beacon.registerBeaconType({
   type: 'cool_beacon',
-  parserLayout: 'm:2-3=0000,i:4-19,i:20-21,i:22-23,p:24-24',
+  beaconLayout: 'm:2-3=0000,i:4-19,i:20-21,i:22-23,p:24-24',
   manufacturerId: 0x1234
 })
 ```
 
-For more information on the `parserLayout` check out
+For more information on the `beaconLayout` check out
 [this page](http://altbeacon.github.io/android-beacon-library/javadoc/org/altbeacon/beacon/BeaconParser.html#setBeaconLayout(java.lang.String))
 from the Android Beacon Library docs.
 
@@ -122,7 +122,7 @@ After building the product can be found under the project root directory
 <dd></dd>
 <dt><a href="#module_beacon-data">beacon-data</a></dt>
 <dd></dd>
-<dt><a href="#module_beacon-parser">beacon-parser</a></dt>
+<dt><a href="#module_beacon-layout">beacon-layout</a></dt>
 <dd></dd>
 <dt><a href="#module_beacon">beacon</a></dt>
 <dd></dd>
@@ -185,27 +185,27 @@ Validates the give array of bytes or converts the hex string into an array of by
 | --- | --- | --- |
 | value | <code>Array.&lt;number&gt;</code> &#124; <code>string</code> | The value to encode. |
 
-<a name="module_beacon-parser"></a>
+<a name="module_beacon-layout"></a>
 
-## beacon-parser
+## beacon-layout
 
-* [beacon-parser](#module_beacon-parser)
-    * [BeaconParser](#exp_module_beacon-parser--BeaconParser) ⏏
-        * [.parseLayout()](#module_beacon-parser--BeaconParser.parseLayout)
+* [beacon-layout](#module_beacon-layout)
+    * [BeaconParser](#exp_module_beacon-layout--BeaconParser) ⏏
+        * [.parseLayout()](#module_beacon-layout--BeaconParser.parseLayout)
 
-<a name="exp_module_beacon-parser--BeaconParser"></a>
+<a name="exp_module_beacon-layout--BeaconParser"></a>
 
 ### BeaconParser ⏏
-This class provides helper functions that relate to deconstructing beacon parser.
+This class provides helper functions that relate to deconstructing beacon beacon.
 
 **Kind**: Exported class  
-<a name="module_beacon-parser--BeaconParser.parseLayout"></a>
+<a name="module_beacon-layout--BeaconParser.parseLayout"></a>
 
 #### BeaconParser.parseLayout()
 Constructs an ordered array of matchers, identifiers, advertised power, and data based
-       on the parser layout
+       on the beacon layout
 
-**Kind**: static method of <code>[BeaconParser](#exp_module_beacon-parser--BeaconParser)</code>  
+**Kind**: static method of <code>[BeaconParser](#exp_module_beacon-layout--BeaconParser)</code>  
 <a name="module_beacon"></a>
 
 ## beacon

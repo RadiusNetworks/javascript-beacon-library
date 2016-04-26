@@ -22,7 +22,7 @@ describe('BeaconAdvertisement', () => {
       let id = 100;
       let type = 'altbeacon';
       let beaconType = {
-        parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+        beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
         manufacturerId: 0x0118
       };
       let ids = ['2F234454CF6D4A0FADF2F4911BA9FFA6', 1, 1];
@@ -52,7 +52,7 @@ describe('BeaconAdvertisement', () => {
       let advertisement = new BeaconAdvertisement(100 /* id */, {
         type: 'altbeacon',
         beaconType: {
-          parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+          beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
           manufacturerId: 0x0118
         },
         ids: ['2F234454CF6D4A0FADF2F4911BA9FFA6', 1, 1],
@@ -68,7 +68,7 @@ describe('BeaconAdvertisement', () => {
       let advertisement = new BeaconAdvertisement(100 /* id */, {
         type: 'altbeacon',
         beaconType: {
-          parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+          beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
           manufacturerId: 0x0118
         },
         ids: ['2F234454CF6D4A0FADF2F4911BA9FFA6', 1, 1],

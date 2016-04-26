@@ -17,11 +17,11 @@ describe('BeaconChromeOS', () => {
   describe('constructAdvertisement()', () => {
     it('Requires manufacturer ID or service UUID', () => {
         expect(() => BeaconChromeOS._constructAdvertisement({beaconType: {
-          parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+          beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
           manufacturerId: 0x0118}}))
                                       .not.to.throw(/No manufacturer ID or service UUID specified/);
         expect(() => BeaconChromeOS._constructAdvertisement({beaconType: {
-          parserLayout: 's:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19,d:20-21',
+          beaconLayout: 's:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19,d:20-21',
           serviceUuid: 0xFEAA}}))
                                       .not.to.throw(/No manufacturer ID or service UUID specified/);
         expect(() => BeaconChromeOS._constructAdvertisement({beaconType: {}}))
@@ -35,7 +35,7 @@ describe('BeaconChromeOS', () => {
     let valid_options = {
       type: 'altbeacon',
       beaconType: {
-        parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+        beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
         manufacturerId: 0x0118
       },
       ids: ['2F234454CF6D4A0FADF2F4911BA9FFA6', 1, 1],

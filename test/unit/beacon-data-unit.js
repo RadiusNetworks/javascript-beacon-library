@@ -11,7 +11,7 @@ describe('BeaconData', () => {
     it('Constructs valid AltBeacon data', () => {
       let dataArray = [190,172,226,197,109,181,223,251,72,210,176,96,208,245,167,16,150,224,3,99,20,189,197,0];
       let beacon_type = {
-        parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+        beaconLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
         manufacturerId: 0x0118
       };
       let ids = ['E2C56DB5DFFB48D2B060D0F5A71096E0', 867, 5309];
@@ -22,7 +22,7 @@ describe('BeaconData', () => {
     it('Constructs valid Eddystone UID data', () => {
       let dataArray = [0,-20,47,35,68,84,244,145,27,169,255,166,0,0,0,0,0,1,0,0];
       let beacon_type = {
-        parserLayout: 's:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19,d:20-21',
+        beaconLayout: 's:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19,d:20-21',
         serviceUuid: 0xFEAA
       };
       let ids = ['2F234454F4911BA9FFA6', '000000000001'];
@@ -33,7 +33,7 @@ describe('BeaconData', () => {
     it('Constructs valid Eddystone URL data', () => {
       let dataArray = [16,-20,2,114,97,100,105,117,115,110,101,116,119,111,114,107,115,7];
       let beacon_type = {
-        parserLayout: 's:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-21v',
+        beaconLayout: 's:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-21v',
         serviceUuid: 0xFEAA
       };
       let ids = ['http://radiusnetworks.com'];

@@ -86,7 +86,7 @@ beacon.advertisements.forEach(advertisement => {
 
 To register a custom beacon type use the `registerBeaconType()` method:
 
-```
+```js
 beacon.registerBeaconType({
   type: 'cool_beacon',
   beaconLayout: 'm:2-3=0000,i:4-19,i:20-21,i:22-23,p:24-24',

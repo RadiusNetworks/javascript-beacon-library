@@ -16,92 +16,30 @@ describe('BeaconChromeOS', () => {
 
   describe('constructAdvertisement()', () => {
     it('Requires manufacturer ID or service UUID', () => {
-        expect(() => BeaconChromeOS._constructAdvertisement({manufacturerId: 0x0118}))
+        expect(() => BeaconChromeOS._constructAdvertisement({beaconType: {
+          parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+          manufacturerId: 0x0118}}))
                                       .not.to.throw(/No manufacturer ID or service UUID specified/);
-        expect(() => BeaconChromeOS._constructAdvertisement({serviceUuid: 0xFFEA}))
+        expect(() => BeaconChromeOS._constructAdvertisement({beaconType: {
+          parserLayout: 's:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19,d:20-21',
+          serviceUuid: 0xFEAA}}))
                                       .not.to.throw(/No manufacturer ID or service UUID specified/);
-        expect(() => BeaconChromeOS._constructAdvertisement({}))
+        expect(() => BeaconChromeOS._constructAdvertisement({beaconType: {}}))
                                       .to.throw(Error, /No manufacturer ID or service UUID specified/);
+        expect(() => BeaconChromeOS._constructAdvertisement({}))
+                                      .to.throw(Error, /No beacon type specified/);
     });
-
-  //   describe('Eddystone-URL', () => {
-  //     let url = 'https://www.example.com';
-  //     let tx_power = -10;
-  //     it('Valid URL and Tx Power', () => {
-  //       expect(BeaconChromeOS._constructAdvertisement({
-  //         type: 'url',
-  //         url: url,
-  //         advertisedTxPower: tx_power
-  //       })).to.eql({
-  //         type: 'broadcast',
-  //         serviceUuids: ['FEAA'],
-  //         serviceData: [{
-  //           uuid: 'FEAA',
-  //           data: EddystoneURL.constructServiceData(url, tx_power)
-  //         }]
-  //       });
-  //     });
-  //
-  //     it('Valid URL, valid Tx Power', () => {
-  //       expect(() => BeaconChromeOS._constructAdvertisement({
-  //         type: 'url',
-  //         url: url,
-  //         advertisedTxPower: -101
-  //       })).to.throw(Error, /Invalid Tx Power value/);
-  //     });
-  //
-  //     it('Invalid URL, invalid Tx Power', () => {
-  //       expect(() => BeaconChromeOS._constructAdvertisement({
-  //         type: 'url',
-  //         url: 'INVALID',
-  //         advertisedTxPower: tx_power
-  //       })).to.throw(Error, /Scheme/);
-  //       expect(() => BeaconChromeOS._constructAdvertisement({
-  //         type: 'url',
-  //         url: 'http://' + String.fromCharCode(0x0),
-  //         advertisedTxPower: tx_power
-  //       })).to.throw(Error, /character/);
-  //     });
-  //
-  //     it('Invalid URL, invalid Tx Power', () => {
-  //       expect(() => BeaconChromeOS._constructAdvertisement({
-  //         type: 'url',
-  //         url: 'INVALID',
-  //         advertisedTxPower: -101
-  //       })).to.throw(Error);
-  //       expect(() => BeaconChromeOS._constructAdvertisement({
-  //         type: 'url',
-  //         url: 'http://' + String.fromCharCode(0x0),
-  //         advertisedTxPower: -101
-  //       })).to.throw(Error);
-  //     });
-  //   });
-  //   describe('Eddystone-UID', () => {
-  //     it('Valid Eddystone-UID', () => {
-  //       expect(BeaconChromeOS._constructAdvertisement({
-  //         type: 'uid',
-  //         advertisedTxPower: -10,
-  //         namespace: '12345678901234567890',
-  //         instance: '123456789012'
-  //       }));
-  //     });
-  //     it('Invalid Eddystone-UID', () => {
-  //       expect(() => BeaconChromeOS._constructAdvertisement({
-  //         type: 'uid',
-  //         advertisedTxPower: -10,
-  //         namespace: 'GGG',
-  //         instance: 'GGG'
-  //       })).to.throw(Error);
-  //     });
-  //   });
   });
 
   describe('registerAdvertisement()', () => {
     let valid_options = {
       type: 'altbeacon',
+      beaconType: {
+        parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+        manufacturerId: 0x0118
+      },
       ids: ['2F234454CF6D4A0FADF2F4911BA9FFA6', 1, 1],
-      advertisedTxPower: -10,
-      manufacturerId: 0x0118
+      advertisedTxPower: -59,
     };
     // Hooks
     afterEach(() => cleanChromeMock());
@@ -116,7 +54,7 @@ describe('BeaconChromeOS', () => {
       mockRegisteringSucceeds();
       return expect(BeaconChromeOS.registerAdvertisement(valid_options))
                                      .to.eventually.contain.all.keys(
-                                       'id', 'type', 'ids', 'advertisedTxPower', 'manufacturerId',
+                                       'id', 'type', 'ids', 'advertisedTxPower',
                                        '_platform');
     });
 

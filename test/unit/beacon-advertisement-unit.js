@@ -18,15 +18,20 @@ describe('BeaconAdvertisement', () => {
   after(() => global._beacon_test = undefined);
 
   describe('constructor()', () => {
-    it('Check AltBeacon assignment', () => {
+    it('Check beacon assignment', () => {
       let id = 100;
       let type = 'altbeacon';
+      let beaconType = {
+        parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+        manufacturerId: 0x0118
+      };
       let ids = ['2F234454CF6D4A0FADF2F4911BA9FFA6', 1, 1];
       let tx_power = -10;
       let manufacturer = 0x0118;
       let adv = new BeaconAdvertisement(
         id, {
           type: type,
+          beaconType: beaconType,
           ids: ids,
           advertisedTxPower: tx_power,
           manufacturerId: manufacturer
@@ -35,39 +40,21 @@ describe('BeaconAdvertisement', () => {
       // AltBeacon members
       expect(adv.id).to.eql(id);
       expect(adv.type).to.eql(type);
+      expect(adv.beaconType).to.eql(beaconType);
       expect(adv.ids).to.eql(ids);
       expect(adv.advertisedTxPower).to.eql(tx_power);
       expect(adv._platform).to.eql({});
     });
-    // it('Check UID assignment', () => {
-    //   let id = 100;
-    //   let type = 'uid';
-    //   let tx_power = -10;
-    //   let namespace = [1,2,3,4,5,6,7,8,9,0];
-    //   let instance = [1,2,3,4,5,6];
-    //   let adv = new BeaconAdvertisement(
-    //     id, {
-    //       type: type,
-    //       advertisedTxPower: tx_power,
-    //       namespace: namespace,
-    //       instance: instance
-    //     },
-    //     {} /* platform */);
-    //   // UID members
-    //   expect(adv.id).to.eql(id);
-    //   expect(adv.type).to.eql(type);
-    //   expect(adv.advertisedTxPower).to.eql(tx_power);
-    //   expect(adv.namespace).to.eql(namespace);
-    //   expect(adv.instance).to.eql(instance);
-    //   // URL members
-    //   expect(adv.url).to.be.undefined;
-    // });
   });
 
   describe('unregisterAdvertisement()', () => {
     it('Unregistering fails', () => {
       let advertisement = new BeaconAdvertisement(100 /* id */, {
         type: 'altbeacon',
+        beaconType: {
+          parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+          manufacturerId: 0x0118
+        },
         ids: ['2F234454CF6D4A0FADF2F4911BA9FFA6', 1, 1],
         advertisedTxPower: -59,
         manufacturerId: 0x0118
@@ -80,6 +67,10 @@ describe('BeaconAdvertisement', () => {
     it('Unregistering succeeds', () => {
       let advertisement = new BeaconAdvertisement(100 /* id */, {
         type: 'altbeacon',
+        beaconType: {
+          parserLayout: 'm:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25',
+          manufacturerId: 0x0118
+        },
         ids: ['2F234454CF6D4A0FADF2F4911BA9FFA6', 1, 1],
         advertisedTxPower: -59,
         manufacturerId: 0x0118

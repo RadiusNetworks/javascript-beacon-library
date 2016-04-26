@@ -88,7 +88,7 @@ function getBrowserifyPipe() {
     // Ignore external modules, in this case TextEncoder.
     bundleExternal: false
   }).bundle()
-    .pipe(source('javascript-beacon-library.js'))
+    .pipe(source('beacon.js'))
     .pipe(buffer());
     // Uncomment once uglify supports arrow functions:
     // https://github.com/mishoo/UglifyJS2/issues/448

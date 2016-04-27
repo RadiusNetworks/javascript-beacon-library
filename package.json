@@ -2,7 +2,7 @@
   "name": "javascript-beacon-library",
   "version": "0.0.1",
   "description": "A JavaScript library for broadcasting Beacon advertisements",
-  "main": "javascript-beacon-library.js",
+  "main": "beacon.js",
   "directories": {
     "test": "test"
   },
@@ -21,7 +21,7 @@
     "chrome-app"
   ],
   "author": "James Nebeker <jnebeker@radiusnetworks.com>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/RadiusNetworks/javascript-beacon-library/issues"
   },

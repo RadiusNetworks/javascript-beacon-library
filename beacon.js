@@ -183,9 +183,9 @@
         data = BeaconData.constructBeaconData(beaconType, options.ids, options.advertisedTxPower);
         advertisement = {
           type: 'broadcast',
-          serviceUuids: [service_uuid],
+          serviceUuids: [serviceUuid],
           serviceData: [{
-            uuid: service_uuid,
+            uuid: serviceUuid,
             data: data
           }]
         };

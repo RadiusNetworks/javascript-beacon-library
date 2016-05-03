@@ -1,3 +1,5 @@
+<img src="http://i.imgur.com/by9OihN.png" style="display: block; margin-left: auto; margin-right: auto; width: 70%; padding: 10px;" />
+
 # JavaScript Beacon Library
 
 A JavaScript library for broadcasting BLE Beacon advertisements, wrapping existing
